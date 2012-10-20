@@ -1,4 +1,4 @@
-require_relative 'tipster'
+require_relative '../tipster'
 
 describe Gossip::Tipster do
   let(:e_card) { stub }

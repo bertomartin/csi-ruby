@@ -63,5 +63,12 @@ describe Gossip::Tipster do
       subject.dispatch_to('alice@example.com')
       subject.dispatched_emails.should eq(['alice@example.com'])
     end
+
+    it "marks as failed when it blows up" do
+      Pony.stub(:mail).and_raise 'Oh noes'
+
+      subject.dispatch_to('alice@example.com')
+      subject.failed_emails.should eq(['alice@example.com'])
+    end
   end
 end

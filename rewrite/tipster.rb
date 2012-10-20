@@ -41,8 +41,10 @@ module Gossip
 
     def dispatch_to(email)
       Gossip::Email.new(e_card, tipper, email).dispatch
+    rescue => e
+      failed_emails << email
+    else
       dispatched_emails << email
     end
-
   end
 end

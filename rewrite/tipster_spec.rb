@@ -37,13 +37,13 @@ describe Gossip::Tipster do
     end
 
     it "accepts a comma separated list" do
-      subject.emails = 'one,two, three'
-      subject.emails.should eq(%w(one two three))
+      subject.emails = 'one@example.com,two@example.com, three@example.com'
+      subject.emails.should eq(%w(one@example.com two@example.com three@example.com))
     end
 
     it "discards duplicates" do
-      subject.emails = 'one,two,two'
-      subject.emails.should eq(%w(one two))
+      subject.emails = 'one@example.com,two@example.com,two@example.com'
+      subject.emails.should eq(%w(one@example.com two@example.com))
     end
   end
 end

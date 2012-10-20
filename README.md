@@ -2,6 +2,11 @@
 
 Anonymized code taken from a real production application.
 
+The real meat is in `v1.rb`, `sharing.rb`, and `tinyurl.rb`.
+
+`e_card` and `email` are simplified stubs included only to make
+the controller run.
+
 ## Gossip
 
 The original code had two bugs in it which were the least interesting

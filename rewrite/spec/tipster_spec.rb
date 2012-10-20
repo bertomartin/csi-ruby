@@ -50,4 +50,11 @@ describe Gossip::Tipster do
       subject.emails.should eq(%w(one@example.com two@example.com))
     end
   end
+
+  describe "dispatching emails" do
+    it "works" do
+      subject.should_receive(:dispatch_to).once.with('bob@example.com')
+      subject.tip!
+    end
+  end
 end

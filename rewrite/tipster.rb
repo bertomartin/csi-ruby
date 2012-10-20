@@ -1,3 +1,5 @@
+require_relative './email'
+
 module Gossip
   class Tipster
     class UnacceptableName < StandardError; end
@@ -29,5 +31,16 @@ module Gossip
 
       @emails = emails
     end
+
+    def tip!
+      emails.each do |email|
+        dispatch_to email
+      end
+    end
+
+    def dispatch_to(email)
+      Gossip::Email.new(e_card, tipper, email).dispatch
+    end
+
   end
 end

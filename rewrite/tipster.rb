@@ -5,13 +5,14 @@ module Gossip
     class UnacceptableName < StandardError; end
     class MissingEmail < StandardError; end
 
-    attr_accessor :e_card, :failed_emails
+    attr_accessor :e_card, :failed_emails, :dispatched_emails
     attr_reader :emails, :tipper
     def initialize(e_card, options = {})
       self.e_card = e_card
       self.tipper = options[:tipper]
       self.emails = options[:emails]
       self.failed_emails = []
+      self.dispatched_emails = []
     end
 
     def tipper=(name)
@@ -40,6 +41,7 @@ module Gossip
 
     def dispatch_to(email)
       Gossip::Email.new(e_card, tipper, email).dispatch
+      dispatched_emails << email
     end
 
   end

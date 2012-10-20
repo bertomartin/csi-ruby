@@ -56,5 +56,12 @@ describe Gossip::Tipster do
       subject.should_receive(:dispatch_to).once.with('bob@example.com')
       subject.tip!
     end
+
+    it "marks as tipped" do
+      Pony.stub(:mail)
+
+      subject.dispatch_to('alice@example.com')
+      subject.dispatched_emails.should eq(['alice@example.com'])
+    end
   end
 end

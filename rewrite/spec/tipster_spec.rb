@@ -1,7 +1,11 @@
 require_relative '../tipster'
+require_relative '../e_card'
 
 describe Gossip::Tipster do
-  let(:e_card) { stub }
+  let(:e_card) do
+    charlie = User.new('Charlie Suarez', 'charlie@example.com')
+    Gossip::ECard.new(1, :recipient => 'Tom Baker', :created_by => charlie)
+  end
 
   subject { Gossip::Tipster.new(e_card, :tipper => 'Alice', :emails => 'bob@example.com') }
 

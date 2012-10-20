@@ -19,11 +19,11 @@ describe Gossip::Tipster do
     end
 
     it "is required" do
-      ->{ Gossip::Tipster.new(e_card, :email => 'email') }.should raise_error Gossip::Tipster::UnacceptableName
+      ->{ Gossip::Tipster.new(e_card, :emails => 'one@example.com') }.should raise_error Gossip::Tipster::UnacceptableName
     end
 
     it "cannot be an empty string" do
-      ->{ Gossip::Tipster.new(e_card, :tipper => '', :email => 'email') }.should raise_error Gossip::Tipster::UnacceptableName
+      ->{ Gossip::Tipster.new(e_card, :tipper => '', :emails => 'one@example.com') }.should raise_error Gossip::Tipster::UnacceptableName
     end
   end
 

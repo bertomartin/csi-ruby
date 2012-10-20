@@ -20,3 +20,5 @@ Enjoy.
 
 The rewrite directory will provide a sample vanilla TDD implementation
 of the functionality based on the assumptions present in the original code.
+
+Note that `ECard` and `Email` remain unchanged.

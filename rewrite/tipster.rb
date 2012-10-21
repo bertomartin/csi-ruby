@@ -5,6 +5,10 @@ module Gossip
     class UnacceptableName < StandardError; end
     class MissingEmail < StandardError; end
 
+    def self.cache_expiration
+      60 * 60 # one hour
+    end
+
     attr_accessor :e_card, :failed_emails, :dispatched_emails
     attr_reader :emails, :tipper
     def initialize(e_card, options = {})
@@ -35,8 +39,21 @@ module Gossip
 
     def tip!
       emails.each do |email|
-        dispatch_to email
+        dispatch_to(email) unless tipped?(email)
       end
+    end
+
+    def tipped!(email)
+      Gossip.cache.set cache_key(email), 'tipped', Tipster.cache_expiration
+      dispatched_emails << email
+    end
+
+    def tipped?(email)
+      Gossip.cache.get cache_key(email)
+    end
+
+    def cache_key(email)
+      "tipped:#{email}|e-card:#{e_card.id}"
     end
 
     def dispatch_to(email)
@@ -44,7 +61,7 @@ module Gossip
     rescue => e
       failed_emails << email
     else
-      dispatched_emails << email
+      tipped!(email)
     end
   end
 end

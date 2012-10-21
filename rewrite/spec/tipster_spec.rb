@@ -1,7 +1,27 @@
+require 'dalli'
 require_relative '../tipster'
 require_relative '../e_card'
 
+module Gossip
+  def self.cache
+    @cache ||= Dalli::Client.new('127.0.0.1:11211', :namespace => 'gossip')
+  end
+end
+
 describe Gossip::Tipster do
+
+  before(:all) do
+    begin
+      Gossip.cache.set('running', true)
+    rescue Dalli::RingError => e
+      fail "You need to have memcached running"
+    end
+  end
+
+  before(:each) do
+    Gossip::Tipster.stub(:cache_expiration => 1)
+  end
+
   let(:e_card) do
     charlie = User.new('Charlie Suarez', 'charlie@example.com')
     Gossip::ECard.new(1, :recipient => 'Tom Baker', :created_by => charlie)
@@ -70,5 +90,24 @@ describe Gossip::Tipster do
       subject.dispatch_to('alice@example.com')
       subject.failed_emails.should eq(['alice@example.com'])
     end
+  end
+
+  it "doesn't spam" do
+    Pony.should_receive(:mail).once
+    subject.emails = 'nospam@example.com'
+
+    subject.tip!
+    subject.tip!
+  end
+
+  # I don't know how to test this without actually waiting.
+  # Sorry :(
+  it "will spam again after the cache expires" do
+    Pony.should_receive(:mail).twice
+    subject.emails = 'spamagain@example.com'
+
+    subject.tip!
+    sleep 1
+    subject.tip!
   end
 end

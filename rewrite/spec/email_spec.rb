@@ -1,5 +1,5 @@
-require_relative 'e_card'
-require_relative './email'
+require_relative '../e_card'
+require_relative '../email'
 
 describe Gossip::Email do
   let(:e_card) { Gossip::ECard.new(1, :recipient => 'Auntie Alice', :created_by => User.new('Bob Smith', 'bob@example.com')) }

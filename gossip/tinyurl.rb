@@ -36,9 +36,13 @@ module Gossip
       ENV['RACK_ENV']
     end
 
+    def self.cached?
+      !@@lookup_tiny_urls[@url].nil?
+    end
+
     # If we sohuld ask the API...
     def self.should_lookup_tiny_url?
-      return false unless @@lookup_tiny_urls[@url].nil?
+      return false if cached?
       case environment
       when "production" then return true
       when "staging" then return true

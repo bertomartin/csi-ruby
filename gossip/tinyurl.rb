@@ -7,6 +7,7 @@ module Gossip
 
     # Base exception class
     class TinyurlException < Exception; end
+    # Exception class
     class InvalidUrlException < TinyurlException; end
 
     @@lookup_tiny_urls = {}

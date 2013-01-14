@@ -1,4 +1,4 @@
-require_relative 'tinyurl'
+require_relative '../tinyurl'
 
 describe Gossip::Tinyurl do
   before(:each) do

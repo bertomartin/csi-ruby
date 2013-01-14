@@ -2,7 +2,7 @@ require 'rack/test'
 require 'json'
 require 'dalli'
 require 'pony'
-require_relative 'v1'
+require_relative '../v1'
 
 module Gossip
   def self.cache

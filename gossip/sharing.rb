@@ -11,11 +11,11 @@ module Gossip
     # and params[:sms_recipients]
     #
     def self.send_to_recipients(params)
-      if params[:name]
-        params[:name] = params[:name].squeeze(" ").strip
-      end
       if params[:message]
         params[:sms_message] = params[:sms_message].squeeze(" ").strip
+      end
+      if params[:name]
+        params[:name] = params[:name].squeeze(" ").strip
       end
       return false if params[:name].nil?
       return false if params[:name].empty?

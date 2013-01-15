@@ -19,7 +19,6 @@ module Gossip
       else
         @@lookup_tiny_urls[url] || url
       end
-      @@lookup_tiny_urls[url]
     end
 
     private

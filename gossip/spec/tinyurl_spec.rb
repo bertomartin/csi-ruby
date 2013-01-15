@@ -43,13 +43,13 @@ describe Gossip::Tinyurl do
     Gossip::Tinyurl.shorten("http://kytrinyx.com").should == 'http://is.gd/5rzpAN'
   end
 
-  it "doesn't actually work in development" do
+  it "doesn't actually shorten in development" do
     Gossip::Tinyurl.stub(:environment => 'development')
-    Gossip::Tinyurl.shorten("http://xkcd.com/1110").should == nil
+    Gossip::Tinyurl.shorten("http://xkcd.com/1110").should == 'http://xkcd.com/1110'
   end
 
-  it "doesn't work in test, either" do
+  it "doesn't shorten in test, either" do
     Gossip::Tinyurl.stub(:environment => 'test')
-    Gossip::Tinyurl.shorten("http://thedailywtf.com").should == nil
+    Gossip::Tinyurl.shorten("http://thedailywtf.com").should == 'http://thedailywtf.com'
   end
 end

@@ -12,7 +12,7 @@ module Gossip
     #
     def self.send_to_recipients(params)
       if params[:message]
-        params[:sms_message] = params[:sms_message].squeeze(" ").strip
+        params[:sms] = params[:sms].squeeze(" ").strip
       end
       if params[:name]
         params[:name] = params[:name].squeeze(" ").strip

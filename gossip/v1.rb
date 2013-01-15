@@ -23,7 +23,7 @@ class GossipV1 < Sinatra::Base
       msg << "wants you to see this! "
       msg << e_card.permalink
       msg << " Sent from #{host}"
-      params[:sms_message] = msg
+      params[:sms] = msg
     end
     params[:e_card] = e_card
     sent_to = Gossip::Sharing.send_to_recipients(params)

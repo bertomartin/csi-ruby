@@ -112,5 +112,13 @@ describe "Gossip" do
   end
 
   it "doesn't send SMSs. Ever. Go see why, and be astonished."
+
+  it "strips tokens" do
+    Gossip::Sharing.get_tokens("a,,B ,\tc").should eq(%w(a b c))
+  end
+
+  it "defaults tokens to empty list" do
+    Gossip::Sharing.get_tokens(nil).should eq([])
+  end
 end
 

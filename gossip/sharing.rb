@@ -25,7 +25,7 @@ module Gossip
         recipients = self.get_tokens(r_group)
         recipients = recipients.uniq
         recipients.each do |r|
-          timestamp_cache_key = "tiptime:#{r}-#{params[:e_card].id}"
+          timestamp_cache_key = "tiptime:#{r}-#{params[:tidbit].id}"
           timestamp = Gossip.cache.get(timestamp_cache_key)
           if timestamp.nil? || (timestamp && timestamp < Time.now-cache_expiration)
             # Different validations before sent with proper method
@@ -56,8 +56,11 @@ module Gossip
 
     # Send email
     def self.send_to_email(address, params)
-      e_card = params[:e_card]
-      Gossip::Email.new(e_card, params[:name], address).dispatch if e_card.created_by.email
+      tidbit = params[:tidbit]
+      name = params[:name]
+      if tidbit.created_by.email
+        Gossip::Email.new(tidbit, name, address).dispatch
+      end
       true
     end
 

@@ -8,7 +8,7 @@ class User < Struct.new(:full_name, :email)
 end
 
 module Gossip
-  class ECard < ActiveRecord::Base
+  class Tidbit < ActiveRecord::Base
 
     attr_reader :id, :created_by, :recipient
     def initialize(id, options = {})
@@ -19,10 +19,10 @@ module Gossip
 
     def self.find(id)
       id = id.to_i
-      raise ActiveRecord::RecordNotFound unless E_CARDS.has_key?(id)
+      raise ActiveRecord::RecordNotFound unless TIDBITS.has_key?(id)
 
-      # See the tests for the defined e-cards
-      E_CARDS[id]
+      # See the tests for the defined tidbits
+      TIDBITS[id]
     end
 
     def permalink

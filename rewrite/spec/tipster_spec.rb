@@ -1,6 +1,6 @@
 require 'dalli'
 require_relative '../tipster'
-require_relative '../e_card'
+require_relative '../tidbit'
 
 module Gossip
   def self.cache
@@ -22,15 +22,15 @@ describe Gossip::Tipster do
     Gossip::Tipster.stub(:cache_expiration => 1)
   end
 
-  let(:e_card) do
+  let(:tidbit) do
     charlie = User.new('Charlie Suarez', 'charlie@example.com')
-    Gossip::ECard.new(1, :recipient => 'Tom Baker', :created_by => charlie)
+    Gossip::Tidbit.new(1, :recipient => 'Tom Baker', :created_by => charlie)
   end
 
-  subject { Gossip::Tipster.new(e_card, :tipper => 'Alice', :emails => 'bob@example.com') }
+  subject { Gossip::Tipster.new(tidbit, :tipper => 'Alice', :emails => 'bob@example.com') }
 
   describe "basic attributes" do
-    its(:e_card) { should eq(e_card) }
+    its(:tidbit) { should eq(tidbit) }
     its(:tipper) { should eq('Alice') }
     its(:emails) { should eq(['bob@example.com']) }
     its(:failed_emails) { should eq([]) }
@@ -43,21 +43,21 @@ describe Gossip::Tipster do
     end
 
     it "is required" do
-      ->{ Gossip::Tipster.new(e_card, :emails => 'one@example.com') }.should raise_error Gossip::Tipster::UnacceptableName
+      ->{ Gossip::Tipster.new(tidbit, :emails => 'one@example.com') }.should raise_error Gossip::Tipster::UnacceptableName
     end
 
     it "cannot be an empty string" do
-      ->{ Gossip::Tipster.new(e_card, :tipper => '', :emails => 'one@example.com') }.should raise_error Gossip::Tipster::UnacceptableName
+      ->{ Gossip::Tipster.new(tidbit, :tipper => '', :emails => 'one@example.com') }.should raise_error Gossip::Tipster::UnacceptableName
     end
   end
 
   describe "emails" do
     specify "are required" do
-      ->{ Gossip::Tipster.new(e_card, :tipper => 'Alice') }.should raise_error Gossip::Tipster::MissingEmail
+      ->{ Gossip::Tipster.new(tidbit, :tipper => 'Alice') }.should raise_error Gossip::Tipster::MissingEmail
     end
 
     specify "cannot be an empty list" do
-      ->{ Gossip::Tipster.new(e_card, :tipper => 'Alice', :emails => '') }.should raise_error Gossip::Tipster::MissingEmail
+      ->{ Gossip::Tipster.new(tidbit, :tipper => 'Alice', :emails => '') }.should raise_error Gossip::Tipster::MissingEmail
     end
 
     it "accepts a comma separated list" do

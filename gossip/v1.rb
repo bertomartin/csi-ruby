@@ -1,5 +1,5 @@
 require 'sinatra'
-require_relative 'e_card'
+require_relative 'tidbit'
 require_relative 'sharing'
 require_relative 'tinyurl'
 require_relative 'email'
@@ -7,7 +7,7 @@ require_relative 'email'
 class GossipV1 < Sinatra::Base
 
   get '/share_by_email_or_sms/:id' do |id|
-    e_card = Gossip::ECard.find(id)
+    tidbit = Gossip::Tidbit.find(id)
     recipients = [
       Gossip::Sharing.get_tokens(params[:emails]),
       Gossip::Sharing.get_tokens(params[:numbers])
@@ -15,17 +15,17 @@ class GossipV1 < Sinatra::Base
     if params[:name] and params[:name].size > 40
       invalid_name = true
     else
-      tinyurl = Gossip::Tinyurl.shorten(e_card.permalink)
-      host = URI.parse(e_card.permalink)
+      tinyurl = Gossip::Tinyurl.shorten(tidbit.permalink)
+      host = URI.parse(tidbit.permalink)
       host = host.host if host.host
       msg = ""
       msg << "#{params[:name]} "
       msg << "wants you to see this! "
-      msg << e_card.permalink
+      msg << tidbit.permalink
       msg << " Sent from #{host}"
       params[:sms] = msg
     end
-    params[:e_card] = e_card
+    params[:tidbit] = tidbit
     sent_to = Gossip::Sharing.send_to_recipients(params)
     sent_to ||= []
 

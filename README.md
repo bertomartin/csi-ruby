@@ -4,7 +4,7 @@ Anonymized code taken from a real production application.
 
 The real meat is in `v1.rb`, `sharing.rb`, and `tinyurl.rb`.
 
-`e_card` and `email` are simplified stubs included only to make
+`tidbit` and `email` are simplified stubs included only to make
 the controller run.
 
 ## Gossip
@@ -21,4 +21,4 @@ Enjoy.
 The rewrite directory will provide a sample vanilla TDD implementation
 of the functionality based on the assumptions present in the original code.
 
-Note that `ECard` and `Email` remain unchanged.
+Note that `Tidbit` and `Email` remain unchanged.

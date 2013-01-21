@@ -9,9 +9,9 @@ module Gossip
     @cache ||= Dalli::Client.new('127.0.0.1:11211', :namespace => 'gossip')
   end
 
-  E_CARDS = {
-    1 => ECard.new(1, :recipient => 'Bob Smith', :created_by => User.new('Alice Smith', 'alice@example.com')),
-    2 => ECard.new(2, :recipient => 'Indira Smith', :created_by => User.new('Bob Smith', nil))
+  TIDBITS = {
+    1 => Tidbit.new(1, :recipient => 'Bob Smith', :created_by => User.new('Alice Smith', 'alice@example.com')),
+    2 => Tidbit.new(2, :recipient => 'Indira Smith', :created_by => User.new('Bob Smith', nil))
   }
 end
 

@@ -9,10 +9,10 @@ module Gossip
       60 * 60 # one hour
     end
 
-    attr_accessor :e_card, :failed_emails, :dispatched_emails
+    attr_accessor :tidbit, :failed_emails, :dispatched_emails
     attr_reader :emails, :tipper
-    def initialize(e_card, options = {})
-      self.e_card = e_card
+    def initialize(tidbit, options = {})
+      self.tidbit = tidbit
       self.tipper = options[:tipper]
       self.emails = options[:emails]
       self.failed_emails = []
@@ -53,11 +53,11 @@ module Gossip
     end
 
     def cache_key(email)
-      "tipped:#{email}|e-card:#{e_card.id}"
+      "tipped:#{email}|tidbit:#{tidbit.id}"
     end
 
     def dispatch_to(email)
-      Gossip::Email.new(e_card, tipper, email).dispatch
+      Gossip::Email.new(tidbit, tipper, email).dispatch
     rescue => e
       failed_emails << email
     else
